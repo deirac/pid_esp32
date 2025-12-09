@@ -28,7 +28,7 @@ void initPWM(PWMData* pwm) {
     mcpwm_deadtime_enable(
         MCPWM_UNIT_0,
         MCPWM_TIMER_0,
-        MCPWM_ACTIVE_RED_FED_FROM_PWMXA,  
+        MCPWM_ACTIVE_HIGH_COMPLIMENT_MODE,  
         deadtime_ticks,
         deadtime_ticks
     );

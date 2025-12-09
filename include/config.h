@@ -22,7 +22,7 @@
 #define PWM_H_PIN               25
 #define PWM_L_PIN               26
 #define PWM_FREQ                20e3        // 20 kHz
-#define PWM_DEADTIME_NS         100         // 100 ns
+#define PWM_DEADTIME_NS         200         // 100 ns
 #define DUTY_MIN                0.05f       // 5%
 #define DUTY_MAX                0.95f       // 95%
 #define PWM_SAMPLING_MS         1000         // Tiempo de muestreo para reporte
