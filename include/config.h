@@ -26,7 +26,7 @@
 #define PWM_DEADTIME_NS         100         // 100 ns
 #define DUTY_MIN                0.05f       // 5%
 #define DUTY_MAX                0.95f       // 95%
-
+#define PWM_SAMPLING_MS         1000         // Tiempo de muestreo para reporte
 
 // ============================================
 // PI CONTROLLER

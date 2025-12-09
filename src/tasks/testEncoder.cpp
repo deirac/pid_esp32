@@ -19,7 +19,7 @@ void testEncoder() {
     EncoderData data;
 
     while (true) {
-         data = getEncoderData();
+        data = getEncoderData();
         printEncoderData(data);
         Serial.println("-----------------------------");
         vTaskDelay(pdMS_TO_TICKS(data.sampling_time_ms));

@@ -9,7 +9,6 @@
 // -------- handle sub-tasks implementations --------
 // --------------------------------------------------
 static TaskHandle_t testPIDTaskHandle = NULL;
-static TaskHandle_t testPWMTaskHandle = NULL;
 static TaskHandle_t calibrateTaskHandle = NULL;
 static TaskHandle_t runMotorTaskHandle = NULL;
 // ---------------------------------------------------
@@ -23,21 +22,8 @@ void startTestEncoderTask() {
 
 // ======== TEST PWM ===================
 void startTestPWMTask() {
-    if(testPWMTaskHandle == NULL) {
-        xTaskCreate(
-            testPWMTask,             // Function that implements the task.
-            "TestPWMTask",           // Text name for the task.
-            2048,                    // Stack size in words, not bytes.
-            NULL,                    // Parameter passed into the task.
-            1,                       // Priority at which the task is created.
-            &testPWMTaskHandle);     // Used to pass out the created task's handle.
-    }
-}
-void stopTestPWMTask() {
-    if(testPWMTaskHandle != NULL) {
-        vTaskDelete(testPWMTaskHandle);
-        testPWMTaskHandle = NULL;
-    }
+    testPWMTask(1);
+    testPWMControlerTask(0);
 }
 
 // ======== TEST PID CONTROLLER =========

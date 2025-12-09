@@ -40,3 +40,19 @@ typedef struct {
     uint32_t sampling_time_ms;   // Tiempo de muestreo (μs)
     
 } EncoderData;
+
+// ---------------------------------------------------------
+// Estado del PWM
+// ---------------------------------------------------------
+typedef struct {
+    // configuración
+    uint32_t frequency_hz;      // Frecuencia del PWM (Hz)
+    uint8_t duty_cycle_percent_A;  // Ciclo de trabajo (%)
+    uint8_t duty_cycle_percent_B;  // Ciclo de trabajo (%)
+    uint32_t sampling_time_ms;   // Tiempo de muestreo (ms)
+    uint32_t dead_time_ns;      // Tiempo muerto (μs)
+
+    // estado del sistema
+    bool signal_active;         // Señal activa
+
+} PWMData;

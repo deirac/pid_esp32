@@ -4,6 +4,9 @@
 TaskHandle_t menuTaskHandle = NULL;
 volatile SystemMode currentMode = MODE_IDLE;
 
+/// @brief Tarea del menú principal
+/// @param parameter
+/// @return void  
 void menuTask(void* parameter) {
     vTaskDelay(pdMS_TO_TICKS(500));
     printMenu();
@@ -32,6 +35,9 @@ void menuTask(void* parameter) {
     }
 }
 
+/// @brief Inicia la tarea del menú
+/// @param void
+/// @return void
 void startMenuTask() {
     xTaskCreatePinnedToCore(
         menuTask,
