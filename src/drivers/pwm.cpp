@@ -86,7 +86,7 @@ void rampPWMDuty(float start_duty, float end_duty, uint32_t ramp_time_ms) {
     while ((step > 0 && current_duty < end_duty) || (step < 0 && current_duty > end_duty)) {
         setPWMDuty(current_duty * 100.0f);
         current_duty += step;
-        delay(10);
+        vTaskDelay(pdMS_TO_TICKS(10));
     }
     setPWMDuty(end_duty * 100.0f); // Asegurar que termine en el valor exacto
 }

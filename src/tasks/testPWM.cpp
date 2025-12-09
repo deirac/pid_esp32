@@ -20,10 +20,12 @@ void testPWM() {
     float top_duty = 0.0f;
 
     while (true) {
+        
         top_duty += 0.05f;
         if (top_duty > DUTY_MAX) {
             top_duty = DUTY_MIN;
         }
+
         rampPWMDuty(0.0f, top_duty, 100); // Rampa hacia arriba
         PWMData data = getPWMData();
         printPWMData();

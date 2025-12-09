@@ -4,7 +4,6 @@
 // MOTOR BALDOR RELIANCE CD6215
 // ============================================
 #define MOTOR_MAX_RPM          1750     // RPM máximo del motor
-#define DEFAULT_SETPOINT       900      // RPM de referencia inicial
 
 
 // ============================================
@@ -31,5 +30,10 @@
 // ============================================
 // PI CONTROLLER
 // ============================================
-#define PI_KP                   (1.0f/10.0f)        // Kp = 0.1
-#define PI_KI                   (2.0f/100.0f)       // Ki = 0.02
+#define PID_KP                   (1.0f/10.0f)        // Kp = 0.1
+#define PID_KI                   (2.0f/100.0f)       // Ki = 0.02
+#define PID_KD                   (0.0f/10.f)         // Kd = 0.0
+#define PID_OUTPUT_MIN           DUTY_MIN
+#define PID_OUTPUT_MAX           DUTY_MAX
+#define PID_SAMPLING_MS          10                  // Tiempo de muestreo del controlador PID
+#define PID_SETPOINT_RPM         900                 // Setpoint de velocidad en RPM para la prueba del PID
