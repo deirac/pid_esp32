@@ -1,5 +1,5 @@
 
-# PID para Motor DC con driver IR2110, encoder y ESP32
+# PID para Motor DC CD6215 con driver IR2110, encoder E6B2-CWZ6C y ESP32
 
 Proyecto: **pid_esp32**  
 Descripción: Control PID para ESP32 orientado a controlar un motor DC con encoder. Este repositorio usa PlatformIO y está escrito en C/C++ para el framework de Arduino sobre ESP32.
