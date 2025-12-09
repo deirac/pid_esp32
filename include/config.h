@@ -37,3 +37,4 @@
 #define PID_OUTPUT_MAX           DUTY_MAX
 #define PID_SAMPLING_MS          10                  // Tiempo de muestreo del controlador PID
 #define PID_SETPOINT_RPM         900                 // Setpoint de velocidad en RPM para la prueba del PID
+#define PID_TIME_US              100                 // Realiza el PID cada 100 us.

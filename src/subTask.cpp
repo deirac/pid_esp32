@@ -52,19 +52,5 @@ void stopCalibrateTask() {
 
 // ======== RUN MOTOR ==================
 void startRunMotorTask() {
-    if(runMotorTaskHandle == NULL) {
-        xTaskCreate(
-            runMotorTask,            // Function that implements the task.
-            "RunMotorTask",          // Text name for the task.
-            2048,                    // Stack size in words, not bytes.
-            NULL,                    // Parameter passed into the task.
-            1,                       // Priority at which the task is created.
-            &runMotorTaskHandle);    // Used to pass out the created task's handle.
-    }
-}
-void stopRunMotorTask() {
-    if(runMotorTaskHandle != NULL) {
-        vTaskDelete(runMotorTaskHandle);
-        runMotorTaskHandle = NULL;
-    }
+    startRunPIDTask(1);
 }

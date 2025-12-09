@@ -2,6 +2,7 @@
 #include "drivers/pwm.h"
 #include "config.h"
 
+
 TaskHandle_t testPWMTaskHandle = nullptr;
 TaskHandle_t testPWMControlerTaskHandle = nullptr;
 
@@ -14,8 +15,9 @@ TaskHandle_t testPWMControlerTaskHandle = nullptr;
 ///@return void
 void testPWM() {
     Serial.println("[TEST_PWM] Tarea iniciada");
-    
-    initPWM();
+
+    PWMData pwm;
+    initPWM(&pwm);
     vTaskDelay(pdTICKS_TO_MS(100)); // Esperar a que el PWM se estabilice
     float top_duty = 0.0f;
 
@@ -27,10 +29,10 @@ void testPWM() {
         }
 
         rampPWMDuty(0.0f, top_duty, 100); // Rampa hacia arriba
-        PWMData data = getPWMData();
-        printPWMData();
+        updatePWMData(&pwm);
+        printPWMData(&pwm);
         Serial.println("-----------------------------");
-        vTaskDelay(pdMS_TO_TICKS(data.sampling_time_ms));
+        vTaskDelay(pdMS_TO_TICKS(pwm.sampling_time_ms));
     }
 }
 

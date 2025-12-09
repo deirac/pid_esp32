@@ -2,12 +2,11 @@
 #include "config.h"
 #include <driver/mcpwm.h>
 
-static PWMData pwmData;
-
 // =======================================================
 // Inicializa el PWM
 // =======================================================
-void initPWM() {
+
+void initPWM(PWMData* pwm) {
     // Configuración de pines PWM
     mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0A, PWM_H_PIN);
     mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0B, PWM_L_PIN);
@@ -39,29 +38,32 @@ void initPWM() {
     mcpwm_set_duty_type(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_A, MCPWM_DUTY_MODE_0);
 
     // Inicializar datos del PWM
-    pwmData.frequency_hz = PWM_FREQ;
-    pwmData.duty_cycle_percent_A = 0;
-    pwmData.duty_cycle_percent_B = 0;
-    pwmData.sampling_time_ms = PWM_SAMPLING_MS;
-    pwmData.dead_time_ns = PWM_DEADTIME_NS;
-    pwmData.signal_active = false;
+    pwm->frequency_hz = PWM_FREQ;
+    pwm->duty_cycle_percent_A = 0;
+    pwm->duty_cycle_percent_B = 0;
+    pwm->sampling_time_ms = PWM_SAMPLING_MS;
+    pwm->dead_time_ns = PWM_DEADTIME_NS;
+    pwm->signal_active = true;
 }
 
 // =======================================================
 // Obtiene los datos actuales del PWM
 // =======================================================
-PWMData getPWMData() {
+void updatePWMData(PWMData* pwm) {
     // Actualizar datos del PWM
-    pwmData.duty_cycle_percent_A = mcpwm_get_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_A);
-    pwmData.duty_cycle_percent_B = mcpwm_get_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_B);
-    pwmData.signal_active = (pwmData.duty_cycle_percent_A > 0);
+    pwm->duty_cycle_percent_A = mcpwm_get_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_A);
+    pwm->duty_cycle_percent_B = mcpwm_get_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_B);
+    pwm->signal_active = (pwm->duty_cycle_percent_A > 0);
 
-    return pwmData;
 }
 
 // =======================================================
 // Establece el ciclo de trabajo del PWM
 // =======================================================
+/**
+ * @brief Modifica el Duty
+ * @param duty_percent (0, 100)
+ */
 void setPWMDuty(float duty_percent) {
     if (duty_percent < (DUTY_MIN * 100.0f)) duty_percent = DUTY_MIN * 100.0f;
     if (duty_percent > (DUTY_MAX * 100.0f)) duty_percent = DUTY_MAX * 100.0f;
@@ -93,18 +95,18 @@ void rampPWMDuty(float start_duty, float end_duty, uint32_t ramp_time_ms) {
 // =======================================================
 // Imprime los datos del PWM en el monitor serial
 // =======================================================
-void printPWMData() {
+void printPWMData(PWMData* pwm) {
     Serial.println("[PWM DATA]");
     Serial.print("Frecuencia (Hz): ");
-    Serial.println(pwmData.frequency_hz);
+    Serial.println(pwm->frequency_hz);
     Serial.print("Ciclo de trabajo A (%): ");
-    Serial.println(pwmData.duty_cycle_percent_A);
+    Serial.println(pwm->duty_cycle_percent_A);
     Serial.print("Ciclo de trabajo B (%): ");
-    Serial.println(pwmData.duty_cycle_percent_B);
+    Serial.println(pwm->duty_cycle_percent_B);
     Serial.print("Tiempo de muestreo (ms): ");
-    Serial.println(pwmData.sampling_time_ms);
+    Serial.println(pwm->sampling_time_ms);
     Serial.print("Tiempo muerto (ns): ");
-    Serial.println(pwmData.dead_time_ns);
+    Serial.println(pwm->dead_time_ns);
     Serial.print("Señal activa: ");
-    Serial.println(pwmData.signal_active ? "Sí" : "No");
+    Serial.println(pwm->signal_active ? "Sí" : "No");
 }

@@ -30,7 +30,7 @@ typedef struct {
 
     // datos de velocidad
     float rpm_instant;          // RPM instantánea
-    float rpm_filtered;         // RPM filtrada
+    float rpm_filtered;         // RPM filtrada (0, 1750)
     float frequency_hz;         // Frecuencia actual (Hz)
 
     // datos temporales
