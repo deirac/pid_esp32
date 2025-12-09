@@ -8,7 +8,6 @@
 // --------------------------------------------------
 // -------- handle sub-tasks implementations --------
 // --------------------------------------------------
-static TaskHandle_t testPIDTaskHandle = NULL;
 static TaskHandle_t calibrateTaskHandle = NULL;
 static TaskHandle_t runMotorTaskHandle = NULL;
 // ---------------------------------------------------
@@ -28,21 +27,8 @@ void startTestPWMTask() {
 
 // ======== TEST PID CONTROLLER =========
 void startTestPIDTask() {
-    if(testPIDTaskHandle == NULL) {
-        xTaskCreate(
-            testPIDTask,             // Function that implements the task.
-            "TestPIDTask",           // Text name for the task.
-            2048,                    // Stack size in words, not bytes.
-            NULL,                    // Parameter passed into the task.
-            1,                       // Priority at which the task is created.
-            &testPIDTaskHandle);     // Used to pass out the created task's handle.
-    }
-}
-void stopTestPIDTask() {
-    if(testPIDTaskHandle != NULL) {
-        vTaskDelete(testPIDTaskHandle);
-        testPIDTaskHandle = NULL;
-    }
+   testPIDTask(1);
+    testPIDControlerTask(0);
 }
 
 // ======== CALIBRATE ==================
@@ -66,19 +52,5 @@ void stopCalibrateTask() {
 
 // ======== RUN MOTOR ==================
 void startRunMotorTask() {
-    if(runMotorTaskHandle == NULL) {
-        xTaskCreate(
-            runMotorTask,            // Function that implements the task.
-            "RunMotorTask",          // Text name for the task.
-            2048,                    // Stack size in words, not bytes.
-            NULL,                    // Parameter passed into the task.
-            1,                       // Priority at which the task is created.
-            &runMotorTaskHandle);    // Used to pass out the created task's handle.
-    }
-}
-void stopRunMotorTask() {
-    if(runMotorTaskHandle != NULL) {
-        vTaskDelete(runMotorTaskHandle);
-        runMotorTaskHandle = NULL;
-    }
+    startRunPIDTask(1);
 }
