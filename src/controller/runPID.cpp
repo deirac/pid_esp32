@@ -4,16 +4,66 @@
 #include "drivers/pwm.h"
 #include "config.h"
 
-
+TaskHandle_t runPWMTaskHandle = NULL;
 TaskHandle_t runPIDTaskHandle = NULL;
 
+
+volatile float pwmOutput;
+
+
+// ==========================================
+// --------------- PWM Control --------------
+// ==========================================
+/**
+ * @brief Control PWM
+ * @param void
+ * @return void
+ */
+void PWMControl(){
+    
+    PWMData pwm;
+    initPWM(&pwm);
+    
+    while(true){
+        setPWMDuty(pwmOutput);
+        vTaskDelay(pdMS_TO_TICKS(10));
+    }
+    
+}
+
+/**
+ * @brief Tarea para control PWM
+ * @param core 
+ * @return void
+ */
+void startRunPWMTask(uint8_t core){
+    if(runPWMTaskHandle == NULL){
+        xTaskCreatePinnedToCore(
+            [](void* pvParameters){
+                PWMControl();
+            },
+            "PWMControl",
+            4096,
+            NULL,
+            3, 
+            &runPWMTaskHandle,
+            core
+        );
+    }
+}
+
+// =======================================
+// ------------ PID Control --------------
+// =======================================
+/**
+ * @brief Control PID y lectura del encoder 
+ * @param void
+ * @return void
+ */
 void PIDControl(){
 
     PIDData pid;
-    PWMData pwm;
-
     initPID(&pid);
-    initPWM(&pwm);
     initEncoder();
 
     //variables de control
@@ -30,15 +80,17 @@ void PIDControl(){
 
         if(dt >= PID_TIME_US/1e3f){// tiempo en ms
             EncoderData encoder = getEncoderData();
-            
-
-            float pwmOutput = computePID(&pid, encoder.rpm_filtered, dt);
-            setPWMDuty(pwmOutput); 
+            pwmOutput = computePID(&pid, encoder.rpm_filtered, dt);
         }
+        vTaskDelay(pdMS_TO_TICKS(10));
     }
 }
 
-
+/**
+ * @brief Tarea para control PID
+ * @param core 
+ * @return void
+ */
 void startRunPIDTask(uint8_t core){
     if(runPIDTaskHandle == NULL){
         xTaskCreatePinnedToCore(
@@ -48,7 +100,7 @@ void startRunPIDTask(uint8_t core){
             "PIDControl",
             4096,
             NULL,
-            3, 
+            2, 
             &runPIDTaskHandle,
             core
         );

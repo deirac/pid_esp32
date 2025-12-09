@@ -3,7 +3,7 @@
 #include "tasks/testPWM.h"
 #include "tasks/testPID.h"
 #include "tasks/calibrate.h"
-#include "tasks/runMotor.h"
+#include "controller/runPID.h"
 
 // --------------------------------------------------
 // -------- handle sub-tasks implementations --------
@@ -52,5 +52,6 @@ void stopCalibrateTask() {
 
 // ======== RUN MOTOR ==================
 void startRunMotorTask() {
-    startRunPIDTask(1);
+    startRunPIDTask(0);
+    startRunPWMTask(1);
 }
