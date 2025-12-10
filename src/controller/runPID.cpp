@@ -21,11 +21,12 @@ volatile float pwmOutput;
  */
 void PWMControl(){
     
-    PWMData pwm;
-    initPWM(&pwm);
-    
+    initPWM();
     while(true){
+        pwmOutput*=100.0f;
         setPWMDuty(pwmOutput);
+        Serial.print("salida: ");
+        Serial.println(pwmOutput);
         vTaskDelay(pdMS_TO_TICKS(10));
     }
     
@@ -81,7 +82,10 @@ void PIDControl(){
         if(dt >= PID_TIME_US/1e3f){// tiempo en ms
             EncoderData encoder = getEncoderData();
             pwmOutput = computePID(&pid, encoder.rpm_filtered, dt);
+            Serial.print("rpm filtered: ");
+            Serial.println(encoder.rpm_filtered);
         }
+        
         vTaskDelay(pdMS_TO_TICKS(10));
     }
 }

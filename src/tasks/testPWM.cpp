@@ -16,8 +16,7 @@ TaskHandle_t testPWMControlerTaskHandle = nullptr;
 void testPWM() {
     Serial.println("[TEST_PWM] Tarea iniciada");
 
-    PWMData pwm;
-    initPWM(&pwm);
+    initPWM();
     vTaskDelay(pdTICKS_TO_MS(100)); // Esperar a que el PWM se estabilice
     float top_duty = 0.0f;
 
@@ -29,10 +28,10 @@ void testPWM() {
         }
 
         rampPWMDuty(0.0f, top_duty, 100); // Rampa hacia arriba
-        updatePWMData(&pwm);
-        printPWMData(&pwm);
+        updatePWMData();
+        printPWMData();
         Serial.println("-----------------------------");
-        vTaskDelay(pdMS_TO_TICKS(pwm.sampling_time_ms));
+        vTaskDelay(pdMS_TO_TICKS(PWM_SAMPLING_MS));
     }
 }
 

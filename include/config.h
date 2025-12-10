@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 
 // ============================================
 // MOTOR BALDOR RELIANCE CD6215
@@ -21,8 +21,8 @@
 // ============================================
 #define PWM_H_PIN               25
 #define PWM_L_PIN               26
-#define PWM_FREQ                20e3        // 20 kHz
-#define PWM_DEADTIME_NS         200         // 100 ns
+#define PWM_FREQ                10e3        // 20 kHz
+#define PWM_DEADTIME_NS         500         // 100 ns
 #define DUTY_MIN                0.05f       // 5%
 #define DUTY_MAX                0.95f       // 95%
 #define PWM_SAMPLING_MS         1000         // Tiempo de muestreo para reporte
@@ -30,11 +30,11 @@
 // ============================================
 // PI CONTROLLER
 // ============================================
-#define PID_KP                   (1.0f/10.0f)        // Kp = 0.1
-#define PID_KI                   (2.0f/100.0f)       // Ki = 0.02
-#define PID_KD                   (0.0f/10.f)         // Kd = 0.0
+#define PID_KP                   (5.0f/100.0f)        // Kp = 0.1
+#define PID_KI                   (1.5f/100.0f)       // Ki = 0.02
+#define PID_KD                   (0.5f/100.f)         // Kd = 0.0
 #define PID_OUTPUT_MIN           DUTY_MIN
 #define PID_OUTPUT_MAX           DUTY_MAX
 #define PID_SAMPLING_MS          10                  // Tiempo de muestreo del controlador PID
-#define PID_SETPOINT_RPM         900                 // Setpoint de velocidad en RPM para la prueba del PID
+#define PID_SETPOINT_RPM         909                 // Setpoint de velocidad en RPM para la prueba del PID
 #define PID_TIME_US              100                 // Realiza el PID cada 100 us.

@@ -46,8 +46,8 @@ void testPID() {
     PIDData pid;  // Instancia directa
     initPID(&pid);  // Pasar dirección de la instancia
     
-    PWMData pwm;
-    initPWM(&pwm);
+    
+    initPWM();
 
     // Variables para control de tiempo
     uint32_t lastTime = millis();
